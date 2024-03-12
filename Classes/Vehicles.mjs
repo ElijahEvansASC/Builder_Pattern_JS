@@ -2,11 +2,12 @@ export class VehicleDirector {
     constructor(builder) {
         this.builder = builder;
 
-        this.constructVehicle = function () {
+        this.constructVehicle = function (year, color, mpg, cost) {
             return this.builder
-                .vehicleYear()
-                .pickColor()
-                .msrpCost()
+                .vehicleYear(year)
+                .pickColor(color)
+                .vehicleMPG(mpg)
+                .msrpCost(cost)
                 .buildVehicle();
         };
     }
@@ -32,28 +33,35 @@ export class VehicleBuilder {
         this.mpg = undefined;
         this.color = undefined;
         this.cost = undefined;
+    }
 
-        this.vehicleYear = function (year) {
+        vehicleYear(year)  {
             this.year = year;
             return this;
         };
 
-        this.pickColor = function (color) {
+        pickColor(color)  {
             this.color = color;
             return this;
         };
 
-        this.msrpCost = function (cost) {
+        vehicleMPG(mpg) {
+            this.mpg = mpg;
+            return this;
+        };
+
+        msrpCost(cost) {
             this.cost = cost;
             return this;
         };
 
-        this.buildVehicle = function () {
+        buildVehicle = function ()  {
             return new Vehicle(this.brand, this.model, this.year, this.mpg, this.color, this.cost);
         };
 
     }
-}
+
+
 
 
 

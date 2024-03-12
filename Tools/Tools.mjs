@@ -1,20 +1,10 @@
 import enquirer from 'enquirer';
 import * as GVars from '../GVars/GVars.mjs';
 
-//const { prompt } = enquirer;
-
-//(async () => {
-  //const { userInput } = await prompt({
-  //  type: 'input',
-  //  name: 'userInput',
-  //  message: 'Please enter something:',
-  //});
-
-  //console.log('You entered:', userInput);
-//})();
+//Enquirer import is used to get user input similar to the C# readline()
 
 
-//Vehicle Brand Choice
+//Vehicle chooses a brand choice because functions give options based on if brand choice is a Toyota or Subaru.
 export async function VehicleBrandChoice(brandChoice) {
     const { prompt } = enquirer;
     var brandValidator = false;
@@ -26,24 +16,26 @@ export async function VehicleBrandChoice(brandChoice) {
     });
     const trimmedChoice = userBrandChoice.trim()
 
-  if(trimmedChoice == 1)
+  if(trimmedChoice == "1")
   {var brandChoice = "Subaru";
   brandValidator = true;}
-  else if(trimmedChoice == 2)
+  else if(trimmedChoice == "2")
   {var brandChoice  = "Toyota";
    brandValidator = true;}
   else
   {console.log('That is not a valid input choice.');
   }
 
+  
+  }
   return brandChoice;
-  };
-
 }
 
-//Vehicle Model Choice
-export async function VehicleModelChoice(brandChoice, modelChoice, vehicleCost, vehicleMPG) {
+//The user selects a model for their brand choice, and the input is an index value that corresponds to different parallel arrays of that vehicle model.
+export async function VehicleModelChoice(brandChoice) {
   const { prompt } = enquirer;
+  var year = 2024;
+  var modelChoice, vehicleCost, vehicleMPG;
   var modelValidator = false;
   if(brandChoice == "Subaru")
   {  
@@ -89,10 +81,10 @@ export async function VehicleModelChoice(brandChoice, modelChoice, vehicleCost, 
       }
   }
 
-  return { modelChoice, vehicleCost, vehicleMPG };
+  return { year, modelChoice, vehicleCost, vehicleMPG };
 }
 
- //Vehicle Color Choice
+//This function gets input from the user on color choice based on their brand choice, they have different color options.
 export async function VehicleColorChoice(brandChoice, colorChoice){
   const { prompt } = enquirer;
   var colorValidator = false;
@@ -114,26 +106,37 @@ export async function VehicleColorChoice(brandChoice, colorChoice){
        }
       }
   }
-  else if(brandChoice =="Toyota"){  while(colorValidator == false){
+  else if(brandChoice =="Toyota")
+   {while(colorValidator == false){
+    PrintToyotaColorList();
     const { userColorIndex } = await prompt({
       type: 'input',
       name: 'userColorIndex',
       message: 'Please choose the number corresponding to your desired color:',
        });
-      }}
-
+       if(userColorIndex >= 0 && userColorIndex <= 7)
+       {
+          colorChoice = GVars.toyotaColor[userColorIndex];
+          colorValidator = true;
+       }
+       else{
+        console.log("That is not a valid choice. Please enter a number 0 through 7.")
+       }
+      }
+    }
   return colorChoice;
  }
 
+ //These functions print a list of options to the user.
 function PrintSubaruColorList(){
-  console.log("0:", GVars.subaruColor[0],  "4:",GVars.subaruColor[4])
-  console.log("1:", GVars.subaruColor[1],  "5:",GVars.subaruColor[5])
-  console.log("2:", GVars.subaruColor[2],  "6:",GVars.subaruColor[6])
+  console.log("0:", GVars.subaruColor[0],  "3:",GVars.subaruColor[3])
+  console.log("1:", GVars.subaruColor[1],  "4:",GVars.subaruColor[4])
+  console.log("2:", GVars.subaruColor[2],  "5:",GVars.subaruColor[5])
 }
 function PrintToyotaColorList(){
-  console.log("0:", GVars.toyotaColor[0],  "4:",GVars.toyotaColor[4])
-  console.log("1:", GVars.toyotaColor[1],  "5:",GVars.toyotaColor[5])
-  console.log("2:", GVars.toyotaColor[2],  "6:",GVars.toyotaColor[6])
+  console.log("0:", GVars.toyotaColor[0],  "3:",GVars.toyotaColor[3])
+  console.log("1:", GVars.toyotaColor[1],  "4:",GVars.toyotaColor[4])
+  console.log("2:", GVars.toyotaColor[2],  "5:",GVars.toyotaColor[5])
 }
 
  function PrintSubaruModelList() {

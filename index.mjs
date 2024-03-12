@@ -1,19 +1,18 @@
 import * as Classes from './Classes/Vehicles.mjs';
-import * as GVars from './GVars/GVars.mjs';
 import * as Tools from './Tools/Tools.mjs';
 
-// modelChoice, vehicleMPG, colorChoice, vehicleCost;
-const year = 2024;
+//Name: Elijah Evans
+//Date: 3/08/2023
+
 console.log("Welcome to the 2024 Vehicle Builder.")
 
+//Declared constants, values stored are from functions in the tools folder and functions in the classes folder
 const brandChoice = await Tools.VehicleBrandChoice();
-console.log(brandChoice);
+const { year, modelChoice, vehicleCost, vehicleMPG } = await Tools.VehicleModelChoice(brandChoice);
+const colorChoice = await Tools.VehicleColorChoice(brandChoice);
+const builder = new Classes.VehicleBuilder(brandChoice, modelChoice);
+const director = new Classes.VehicleDirector(builder);
+const userVehicle = director.constructVehicle(year, colorChoice, vehicleMPG, vehicleCost);
 
-const { modelChoice, vehicleCost, vehicleMPG } = await Tools.VehicleModelChoice(brandChoice);
-
-
-//var colorChoice = await Tools.VehicleColorChoice(brandChoice);
-
-//vehicleName = new Classes.VehicleBuilder(parameters...).BuildVehicle();
-let userVehicle =  new Classes.VehicleBuilder(brandChoice, modelChoice, year, vehicleMPG, GVars.colorChoice,vehicleCost).buildVehicle();
-console.log(userVehicle);
+//Outputs message to user on their vehicles specifications that they built
+console.log("You built a " + userVehicle.year, userVehicle.model, userVehicle.brand + ". It gets up to", userVehicle.mpg, "mpg and is", userVehicle.color +".");
